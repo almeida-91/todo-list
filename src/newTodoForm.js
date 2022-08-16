@@ -2,6 +2,8 @@ import newTodoItem from "./newTodoItem.js";
 import {todoList} from "./index.js";
 import renderTodoList from "./renderTodoList.js";
 import addItemToSidebar from "./addItemToSidebar.js";
+import createTodoListContainer from "./createTodoListContainer.js";
+import addTask from "./newtask.js";
 
 export default function todoForm() {
     const content = document.getElementById('content');
@@ -13,6 +15,18 @@ export default function todoForm() {
     form.classList.add('form');
 
     // Create label + input for each todo item attribute
+
+    // Select Project
+    const projectLabel = document.createElement('label');
+    projectLabel.setAttribute('for','project');
+    projectLabel.innerHTML = 'Project : ';
+
+    const projectInput = document.createElement('input');
+    projectInput.setAttribute('type','text');
+    projectInput.setAttribute('id','project');
+
+    form.appendChild(projectLabel);
+    form.appendChild(projectInput);
 
     // Title/task
     const titleLabel = document.createElement('label');
@@ -92,15 +106,26 @@ export default function todoForm() {
     submitButton.classList.add('submitButton');
     submitButton.innerHTML = 'Submit';
 
-    submitButton.addEventListener('click', () =>{
-        todoList.push(newTodoItem(titleInput.value,descInput.value,
+    submitButton.addEventListener('click',() => {
+        console.log('success');
+        addTask(projectInput.value,titleInput.value,descInput.value,
+        dueInput.value,prioInput.value,notesInput.value)});
+    
+    //addEventListener('click', () =>{
+        /* addTask(projectInput.value,titleInput.value,descInput.value,
+            dueInput.value,prioInput.value,notesInput.value); */
+        /* todoList.push(newTodoItem(titleInput.value,descInput.value,
         dueInput.value,prioInput.value,notesInput.value));
-        console.log(todoList);
-        renderTodoList();
-        addItemToSidebar(titleInput.value);
-        });
+        renderTodoList(); */
+        //});
 
     formContainer.appendChild(form);
     formContainer.appendChild(submitButton);
-    content.insertBefore(formContainer, todoListContainer);
+    const todoListContainer = document.getElementById('todoListContainer');
+    if (todoListContainer){
+        content.insertBefore(formContainer, todoListContainer);
+    } else {
+        content.appendChild(formContainer);
+        createTodoListContainer();
+    }
 }

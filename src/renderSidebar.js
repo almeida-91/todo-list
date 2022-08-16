@@ -15,6 +15,7 @@ export default function renderSidebar(){
     newTask.addEventListener('click',toggleNewForm);
     sidebar.appendChild(newTask);
     
+    
 
     content.appendChild(sidebar);
 }

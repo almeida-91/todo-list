@@ -1,6 +1,7 @@
+import { removeTask, seeDetails } from "./detailsRemoveFunctions.js";
 import {todoList} from "./index.js";
 
-export default function renderTodoList() {
+export default function renderTodoList(project) {
     const content = document.getElementById('content');
     
     // Create the Task List container
@@ -26,10 +27,7 @@ export default function renderTodoList() {
     actions.innerHTML = 'Actions';
 
     tableTopRow.appendChild(title);
-    //tableTopRow.appendChild(description);
     tableTopRow.appendChild(duedate);
-    //tableTopRow.appendChild(prio);
-    //tableTopRow.appendChild(notes);
     tableTopRow.appendChild(actions);
     taskTable.appendChild(tableTopRow);
     todoListContainer.appendChild(taskTable);
@@ -37,7 +35,7 @@ export default function renderTodoList() {
     tableTopRow.classList.add('tablerow');
 
     // Add Task List to its container
-    for (let i = 0 ; i < todoList.length ; i++ ){
+    for (let i = 0 ; i < project.todoList.length ; i++ ){
         let newTask = document.createElement('tr');
         let newTaskTitle = document.createElement('td');
         let newTaskDescription = document.createElement('td');
@@ -45,20 +43,35 @@ export default function renderTodoList() {
         let newTaskPrio = document.createElement('td');
         let newTaskNotes = document.createElement('td');
         let newTaskActions = document.createElement('td');
+        let details = document.createElement('button');
+        let remove = document.createElement('button');
 
-        newTaskTitle.innerHTML = `${todoList[i].title}`;
-        newTaskDescription.innerHTML = `${todoList[i].description}`;
-        newTaskdueDate.innerHTML = `${todoList[i].dueDate}`;
-        newTaskPrio.innerHTML = `${todoList[i].priority}`;
-        newTaskNotes.innerHTML = `${todoList[i].notes}`;
-        newTaskActions.innerHTML = `Delete`;
+        details.innerHTML = '+';
+        remove.innerHTML = 'x';
+
+        newTaskTitle.textContent = `${project.todoList[i].title}`;
+        newTaskDescription.textContent = `${project.todoList[i].description}`;
+        newTaskdueDate.textContent = `${project.todoList[i].dueDate}`;
+        newTaskPrio.textContent = `${project.todoList[i].priority}`;
+        newTaskNotes.textContent = `${project.todoList[i].notes}`;
+        
+        details.addEventListener('click', () => seeDetails(project,i));
+        remove.addEventListener('click',()=> removeTask(project,i));
+
+        newTaskActions.appendChild(details);
+        newTaskActions.appendChild(remove);
 
         newTask.appendChild(newTaskTitle);
-        //newTask.appendChild(newTaskDescription);
         newTask.appendChild(newTaskdueDate);
-        //newTask.appendChild(newTaskPrio);
-        //newTask.appendChild(newTaskNotes);
         newTask.appendChild(newTaskActions);
+
+        if (newTaskPrio.textContent == 'High'){
+            newTask.style.backgroundColor = 'red';
+        } else if (newTaskPrio.textContent == 'Medium'){
+            newTask.style.backgroundColor = 'yellow';
+        } else {
+            newTask.style.backgroundColor = 'green';
+        }
 
         taskTable.appendChild(newTask);
     }

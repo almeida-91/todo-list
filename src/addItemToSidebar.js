@@ -1,5 +1,3 @@
-import toggleNewForm from "./toggleNewForm.js";
-
 export default function addItemToSidebar(task) {
     const sidebar = document.getElementById('sidebar');
     const toggle = document.getElementById('toggle');

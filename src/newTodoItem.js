@@ -7,3 +7,10 @@ export default function newTodoItem(title, description,dueDate,priority,notes) {
         notes : notes,
     }
 }
+
+export function newProject(title,todoList) {
+    return {
+        title : title,
+        todoList : todoList,
+    }
+}
