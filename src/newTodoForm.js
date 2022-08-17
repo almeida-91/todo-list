@@ -110,14 +110,6 @@ export default function todoForm() {
         console.log('success');
         addTask(projectInput.value,titleInput.value,descInput.value,
         dueInput.value,prioInput.value,notesInput.value)});
-    
-    //addEventListener('click', () =>{
-        /* addTask(projectInput.value,titleInput.value,descInput.value,
-            dueInput.value,prioInput.value,notesInput.value); */
-        /* todoList.push(newTodoItem(titleInput.value,descInput.value,
-        dueInput.value,prioInput.value,notesInput.value));
-        renderTodoList(); */
-        //});
 
     formContainer.appendChild(form);
     formContainer.appendChild(submitButton);

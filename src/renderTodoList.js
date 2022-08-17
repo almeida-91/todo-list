@@ -1,10 +1,16 @@
+import createTodoListContainer from "./createTodoListContainer.js";
 import { removeTask, seeDetails } from "./detailsRemoveFunctions.js";
 import {todoList} from "./index.js";
+import todoForm from "./newTodoForm.js";
+import renderSidebar from "./renderSidebar.js";
 
 export default function renderTodoList(project) {
     const content = document.getElementById('content');
     
     // Create the Task List container
+    renderSidebar();
+    todoForm();
+    
     const todoListContainer = document.getElementById('todoListContainer');
     todoListContainer.innerHTML = '';
     todoListContainer.classList.add('todoListContainer');
