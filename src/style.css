@@ -61,11 +61,13 @@ footer {
 }
 
 tr {
+    border-radius: 3px;
     border: 1px solid black;
     height: 2em;
-    margin: 0;
+    margin: 10px 0;
     margin-top: -1px;
     display: flex;
+    width: 100%;
 }
 
 td {

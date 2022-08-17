@@ -1,4 +1,6 @@
+import { save, seeDetails } from "./detailsRemoveFunctions.js";
 import { projects } from "./index.js";
+import renderTodoList from "./renderTodoList.js";
 import toggleNewForm from "./toggleNewForm.js";
 
 export default function renderSidebar(){    
@@ -19,15 +21,25 @@ export default function renderSidebar(){
     
     // Add projects and todolists to sidebar
     for (let i = 0 ; i < projects.length ; i++) {
-        const project = document.createElement('ul');
-        project.textContent = `${projects[i].title}`;
+        const project = document.createElement('a');
+        project.innerHTML = `<p>${projects[i].title}</p>`;
+        project.addEventListener('click', ()=>{renderTodoList(projects[i])});
         for (let j = 0 ; j < projects[i].todoList.length ; j++){
-            const task = document.createElement('li');
-            task.textContent = `${projects[i].todoList[j].title}`;
+            const task = document.createElement('a');
+            task.innerHTML = `<p>${projects[i].todoList[j].title}</p>`;
+            task.addEventListener('click',function(e){
+                e.stopPropagation();
+                seeDetails(projects[i],j)
+            }); 
             project.appendChild(task);
         }
         sidebar.appendChild(project);
     }
+
+    const saveChanges = document.createElement('button');
+    saveChanges.textContent = 'Save Changes';
+    saveChanges.addEventListener('click',save);
+    sidebar.appendChild(saveChanges);
 
     content.appendChild(sidebar);
 }

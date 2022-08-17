@@ -1,4 +1,4 @@
-import { todoList } from "./index.js";
+import { projects, todoList } from "./index.js";
 import renderSidebar from "./renderSidebar.js";
 import renderTodoList from "./renderTodoList.js";
 
@@ -38,4 +38,8 @@ export function seeDetails(project,index){
 export function removeTask(index){
     project.todoList.splice(index,1);
     renderTodoList();
+}
+
+export function save(){
+    localStorage.setItem('projects', JSON.stringify(projects));
 }

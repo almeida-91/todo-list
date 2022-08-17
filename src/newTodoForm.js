@@ -1,9 +1,6 @@
-import newTodoItem from "./newTodoItem.js";
-import {todoList} from "./index.js";
-import renderTodoList from "./renderTodoList.js";
-import addItemToSidebar from "./addItemToSidebar.js";
 import createTodoListContainer from "./createTodoListContainer.js";
 import addTask from "./newtask.js";
+import { format, compareAsc } from 'date-fns';
 
 export default function todoForm() {
     const content = document.getElementById('content');
@@ -107,9 +104,10 @@ export default function todoForm() {
     submitButton.innerHTML = 'Submit';
 
     submitButton.addEventListener('click',() => {
-        console.log('success');
+        let date = format(new Date(`${dueInput.value}`), 'dd-MM-yy');
+        console.log(date);
         addTask(projectInput.value,titleInput.value,descInput.value,
-        dueInput.value,prioInput.value,notesInput.value)});
+        date,prioInput.value,notesInput.value)});
 
     formContainer.appendChild(form);
     formContainer.appendChild(submitButton);

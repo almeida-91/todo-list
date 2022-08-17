@@ -10,10 +10,15 @@ export default function renderTodoList(project) {
     // Create the Task List container
     renderSidebar();
     todoForm();
-    
+
     const todoListContainer = document.getElementById('todoListContainer');
+    if (!(todoListContainer)){
+        todoListContainer = document.createElement('div');
+    }
+
     todoListContainer.innerHTML = '';
     todoListContainer.classList.add('todoListContainer');
+
     const taskTable = document.createElement('table');
     const tableTopRow = document.createElement('tr');
     const title = document.createElement('td');
