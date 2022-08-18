@@ -1,3 +1,4 @@
+import { save } from "./detailsRemoveFunctions.js";
 import { projects, todoList } from "./index.js";
 import todoForm from "./newTodoForm.js";
 import newTodoItem, { newProject } from "./newTodoItem";
@@ -22,6 +23,7 @@ export default function addTask
     newproject.todoList.push(newTask);
     console.log(newproject.todoList);
     projects.push(newproject);
+    save();
     renderSidebar();
     todoForm();    
     renderTodoList(newproject);

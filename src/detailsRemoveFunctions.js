@@ -1,6 +1,10 @@
 import { projects, todoList } from "./index.js";
 import renderSidebar from "./renderSidebar.js";
 import renderTodoList from "./renderTodoList.js";
+import { differenceInCalendarDays, format, parse, parseISO } from 'date-fns';
+import { newProject } from "./newTodoItem.js";
+
+
 
 export function seeDetails(project,index){
     const content = document.getElementById('content');
@@ -37,7 +41,17 @@ export function seeDetails(project,index){
 }
 
 export function removeTask(project,index){
-    project.todoList.splice(index,1);
+    //project.todoList.splice(index,1);
+    
+    for (let i = 0 ; i < projects.length ; i++) {
+        for(let j = 0 ; j < projects[i].todoList.length ; j++){
+            if(project.todoList[index].title == projects[i].todoList[j].title
+            && project.todoList[index].dueDate == projects[i].todoList[j].dueDate){
+                projects[i].todoList.splice(j,1);
+            }
+        }
+    }
+    save();
     renderTodoList(todoList);
 }
 
@@ -51,4 +65,34 @@ export function removeEmptyProject(){
             projects.splice(i,1);
         }
     }
+}
+
+export function checkWeeklyTasks(){
+    let weeklyProject = new newProject('weekly', todoList);
+    weeklyProject.todoList = [];
+    for (let i = 0 ; i < projects.length ; i++ ){
+        for (let j = 0 ; j < projects[i].todoList.length ; j++){
+            let taskdueDate = parse(projects[i].todoList[j].dueDate, 'dd-MM-yy', new Date());
+            if ( differenceInCalendarDays(new Date(),taskdueDate) <= 7 ){
+                console.log(weeklyProject.todoList);
+                console.log(weeklyProject);
+                weeklyProject.todoList.push(projects[i].todoList[j]);
+            }
+        }
+    }
+    renderTodoList(weeklyProject);
+}
+
+export function checkDailyTasks(){
+    let dailyProject = new newProject('daily', todoList);
+    dailyProject.todoList = [];
+    for (let i = 0 ; i < projects.length ; i++ ){
+        for (let j = 0 ; j < projects[i].todoList.length ; j++){
+            let taskdueDate = parse(projects[i].todoList[j].dueDate, 'dd-MM-yy', new Date());
+            if ( differenceInCalendarDays(new Date(),taskdueDate) == 0 ){
+                dailyProject.todoList.push(projects[i].todoList[j]);
+            }
+        }
+    }
+    renderTodoList(dailyProject);
 }

@@ -1,6 +1,6 @@
 import createTodoListContainer from "./createTodoListContainer.js";
 import addTask from "./newtask.js";
-import { format, compareAsc } from 'date-fns';
+import { format } from 'date-fns';
 
 export default function todoForm() {
     const content = document.getElementById('content');
