@@ -1,4 +1,4 @@
-import { save, seeDetails } from "./detailsRemoveFunctions.js";
+import { removeEmptyProject, save, seeDetails } from "./detailsRemoveFunctions.js";
 import { projects } from "./index.js";
 import renderTodoList from "./renderTodoList.js";
 import toggleNewForm from "./toggleNewForm.js";
@@ -19,6 +19,9 @@ export default function renderSidebar(){
     newTask.addEventListener('click',toggleNewForm);
     sidebar.appendChild(newTask);
     
+    // Remove empty projects
+    removeEmptyProject();
+
     // Add projects and todolists to sidebar
     for (let i = 0 ; i < projects.length ; i++) {
         const project = document.createElement('a');

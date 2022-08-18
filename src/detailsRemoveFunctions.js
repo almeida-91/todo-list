@@ -6,7 +6,8 @@ export function seeDetails(project,index){
     const content = document.getElementById('content');
     content.innerHTML = '';
     renderSidebar();
-    
+    todoList = project;
+
     let task = project.todoList[index];
     const taskDetails = document.createElement('div');
     const taskTitle = document.createElement('p');
@@ -35,11 +36,19 @@ export function seeDetails(project,index){
     content.appendChild(taskDetails);
 }
 
-export function removeTask(index){
+export function removeTask(project,index){
     project.todoList.splice(index,1);
-    renderTodoList();
+    renderTodoList(todoList);
 }
 
 export function save(){
     localStorage.setItem('projects', JSON.stringify(projects));
+}
+
+export function removeEmptyProject(){
+    for (let i = 0 ; i < projects.length ; i++){
+        if (projects[i].todoList.length == 0){
+            projects.splice(i,1);
+        }
+    }
 }

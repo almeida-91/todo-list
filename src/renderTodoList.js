@@ -11,6 +11,8 @@ export default function renderTodoList(project) {
     renderSidebar();
     todoForm();
 
+    if (project.length == 0) return;
+
     const todoListContainer = document.getElementById('todoListContainer');
     if (!(todoListContainer)){
         todoListContainer = document.createElement('div');
