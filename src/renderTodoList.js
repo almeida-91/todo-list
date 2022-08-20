@@ -106,11 +106,17 @@ export default function renderTodoList(project) {
         newTask.appendChild(newTaskCheckComplete);
 
         if (newTaskPrio.textContent == 'High' && !(project.todoList[i].complete)){
-            newTask.style.border = '1px solid red';
+            newTask.style.color = '#dc2626';
+            newTask.style.border = '2px solid #dc2626';
+            newTask.style.backgroundColor = '#fecaca';
         } else if (newTaskPrio.textContent == 'Medium' && !(project.todoList[i].complete)){
-            newTask.style.border = '1px solid yellow';
+            newTask.style.backgroundColor = '#fef9c3';
+            newTask.style.color = '#eab308'
+            newTask.style.border = '2px solid #eab308';
         } else if (newTaskPrio.textContent == 'Low' && !(project.todoList[i].complete)){
-            newTask.style.border = '1px solid green';
+            newTask.style.backgroundColor = '#bbf7d0';
+            newTask.style.color = '#16a34a'
+            newTask.style.border = '2px solid #16a34a';
         }
     
 
