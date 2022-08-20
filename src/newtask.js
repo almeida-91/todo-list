@@ -25,7 +25,7 @@ export default function addTask
     projects.push(newproject);
     save();
     renderSidebar();
-    todoForm();    
+    todoForm();
     renderTodoList(newproject);
     newtodoList = newproject.todoList;
 }

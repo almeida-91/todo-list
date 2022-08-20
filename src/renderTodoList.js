@@ -139,4 +139,5 @@ export default function renderTodoList(project) {
     todoListContainer.appendChild(newTaskbutton);
 
     content.appendChild(todoListContainer);
+    toggleNewForm();
 }
