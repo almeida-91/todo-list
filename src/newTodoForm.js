@@ -42,7 +42,7 @@ export default function todoForm() {
     projectInput.appendChild(project);
 
     projectInput.onchange = () => {
-        if (projectInput.value == 'Other'){
+        if (projectInput.value == 'Other' || projects.length == 0){
             const newProjectLabel = document.createElement('label');
             newProjectLabel.setAttribute('for','newProjectInput');
             newProjectLabel.setAttribute('id','newProjectLabel');
