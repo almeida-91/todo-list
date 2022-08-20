@@ -29,8 +29,6 @@ export default function todoForm() {
     projectInput.setAttribute('id','project');
     projectInput.required = true;
 
-
-    console.log(projects);
     for (let i = 0 ; i < projects.length ; i++){
         let project = document.createElement('option');
         project.value = projects[i].title;

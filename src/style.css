@@ -182,10 +182,14 @@ textarea {
     resize: none;
 }
 
-td button {
-    padding: 5px;
-    margin: 5px;
-    background-color: #94a3b8;
+.todoActions {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.todoActions a {
+    display: flex;
+    align-items: center;
 }
 
 .details {

@@ -4,6 +4,8 @@ import {todoList} from "./index.js";
 import todoForm from "./newTodoForm.js";
 import renderSidebar from "./renderSidebar.js";
 import toggleNewForm from "./toggleNewForm.js";
+import detailsIcon from "./eye-plus-outline.png";
+import removeIcon from "./trash-can.png";
 
 export default function renderTodoList(project) {
     const content = document.getElementById('content');
@@ -62,12 +64,16 @@ export default function renderTodoList(project) {
         let newTaskPrio = document.createElement('td');
         let newTaskNotes = document.createElement('td');
         let newTaskActions = document.createElement('td');
-        let details = document.createElement('button');
-        let remove = document.createElement('button');
+        let details = document.createElement('a');
+        let detailsImg = document.createElement('img');
+        detailsImg.src = detailsIcon;
+        let remove = document.createElement('a');
+        let removeImg = document.createElement('img');
+        removeImg.src = removeIcon;
         let newTaskCheckComplete = document.createElement('td');
 
-        details.innerHTML = '+';
-        remove.innerHTML = 'x';
+        details.appendChild(detailsImg);
+        remove.appendChild(removeImg);
 
         newTaskTitle.textContent = `${project.todoList[i].title}`;
         newTaskDescription.textContent = `${project.todoList[i].description}`;
@@ -97,6 +103,7 @@ export default function renderTodoList(project) {
         details.addEventListener('click', () => seeDetails(project,i));
         remove.addEventListener('click',()=> removeTask(project,i));
 
+        newTaskActions.classList.add('todoActions');
         newTaskActions.appendChild(details);
         newTaskActions.appendChild(remove);
 
