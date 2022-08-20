@@ -5,6 +5,7 @@ export default function newTodoItem(title, description,dueDate,priority,notes) {
         dueDate : dueDate,
         priority : priority,
         notes : notes,
+        complete : false,
     }
 }
 

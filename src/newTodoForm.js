@@ -1,13 +1,19 @@
 import createTodoListContainer from "./createTodoListContainer.js";
 import addTask from "./newtask.js";
 import { format } from 'date-fns';
+import { projects } from "./index.js";
+import { newProject } from "./newTodoItem.js";
 
 export default function todoForm() {
     const content = document.getElementById('content');
+    const todoListContainer = document.getElementById('todoListContainer');
     // Create form to append to DOM
     const formContainer = document.createElement('div');
     formContainer.id = 'formContainer';
     formContainer.style.visibility = 'visible';
+    formContainer.style.margin = '20px';
+    formContainer.style.display = 'flex';
+    formContainer.style.flexDirection = 'column';
     const form = document.createElement('form');
     form.classList.add('form');
 
@@ -18,9 +24,44 @@ export default function todoForm() {
     projectLabel.setAttribute('for','project');
     projectLabel.innerHTML = 'Project : ';
 
-    const projectInput = document.createElement('input');
+    const projectInput = document.createElement('select');
     projectInput.setAttribute('type','text');
     projectInput.setAttribute('id','project');
+    projectInput.required = true;
+
+    for (let i = 0 ; i < projects.length ; i++){
+        let project = document.createElement('option');
+        project.value = projects[i].title;
+        project.innerHTML = `${projects[i].title}`;
+        projectInput.appendChild(project);
+    }
+
+    let project = document.createElement('option');
+    project.value = 'Other';
+    project.innerHTML = 'Other';
+    projectInput.appendChild(project);
+
+    projectInput.onchange = () => {
+        if (projectInput.value == 'Other'){
+            const newProjectLabel = document.createElement('label');
+            newProjectLabel.setAttribute('for','newProjectInput');
+            newProjectLabel.setAttribute('id','newProjectLabel');
+            newProjectLabel.innerHTML = 'New project name : ';
+            
+            const newProjectInput = document.createElement('input');
+            newProjectInput.setAttribute('type','text');
+            newProjectInput.setAttribute('id','newProjectInput');
+    
+            form.insertBefore(newProjectLabel,titleLabel);
+            form.insertBefore(newProjectInput,titleLabel);
+        } else {
+            const newProjectInput = document.getElementById('newProjectInput');
+            const newProjectLabel = document.getElementById('newProjectLabel');
+            form.removeChild(newProjectInput);
+            form.removeChild(newProjectLabel);
+        }
+    }
+
 
     form.appendChild(projectLabel);
     form.appendChild(projectInput);
@@ -33,6 +74,7 @@ export default function todoForm() {
     const titleInput = document.createElement('input');
     titleInput.setAttribute('type','text');
     titleInput.setAttribute('id', 'title');
+    titleInput.required = true;
 
     form.appendChild(titleLabel);
     form.appendChild(titleInput);
@@ -57,6 +99,7 @@ export default function todoForm() {
     const dueInput = document.createElement('input');
     dueInput.setAttribute('id','dueDate');
     dueInput.setAttribute('type','date');
+    dueInput.required = true;
 
     form.appendChild(dueLabel);
     form.appendChild(dueInput);
@@ -68,6 +111,7 @@ export default function todoForm() {
 
     const prioInput = document.createElement('select');
     prioInput.setAttribute('id','priority');
+    prioInput.required = true;
 
     const prioHigh = document.createElement('option');
     prioHigh.value = 'High';
@@ -83,6 +127,8 @@ export default function todoForm() {
     prioLow.value = 'Low';
     prioLow.text = 'Low';
     prioInput.appendChild(prioLow);
+
+    prioMedium.selected = 'selected';
 
     form.appendChild(prioLabel);
     form.appendChild(prioInput);
@@ -101,19 +147,17 @@ export default function todoForm() {
     // Submit Button
     const submitButton = document.createElement('button');
     submitButton.classList.add('submitButton');
-    submitButton.innerHTML = 'Submit';
+    submitButton.innerHTML = 'Add Task';
 
     submitButton.addEventListener('click',() => {
         let date = format(new Date(`${dueInput.value}`), 'dd-MM-yy');
-        console.log(date);
         addTask(projectInput.value,titleInput.value,descInput.value,
         date,prioInput.value,notesInput.value)});
 
     formContainer.appendChild(form);
     formContainer.appendChild(submitButton);
-    const todoListContainer = document.getElementById('todoListContainer');
     if (todoListContainer){
-        content.insertBefore(formContainer, todoListContainer);
+        todoListContainer.appendChild(formContainer);
     } else {
         content.appendChild(formContainer);
         createTodoListContainer();

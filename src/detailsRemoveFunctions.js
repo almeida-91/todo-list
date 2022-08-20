@@ -10,10 +10,11 @@ export function seeDetails(project,index){
     const content = document.getElementById('content');
     content.innerHTML = '';
     renderSidebar();
-    todoList = project;
+    let newtodoList = project;
 
     let task = project.todoList[index];
     const taskDetails = document.createElement('div');
+    taskDetails.classList.add('details');
     const taskTitle = document.createElement('p');
     const taskDescription = document.createElement('p');
     const taskdueDate = document.createElement('p');
@@ -28,7 +29,7 @@ export function seeDetails(project,index){
     taskNotes.textContent = `Notes: ${project.todoList[index].notes}`;
     backButton.textContent = 'See tasklist';
 
-    backButton.addEventListener('click', ()=>{renderTodoList(todoList)});
+    backButton.addEventListener('click', ()=>{renderTodoList(newtodoList)});
 
     taskDetails.appendChild(taskTitle);
     taskDetails.appendChild(taskDescription);
@@ -41,18 +42,18 @@ export function seeDetails(project,index){
 }
 
 export function removeTask(project,index){
-    //project.todoList.splice(index,1);
-    
-    for (let i = 0 ; i < projects.length ; i++) {
+    outer: for (let i = 0 ; i < projects.length ; i++) {
         for(let j = 0 ; j < projects[i].todoList.length ; j++){
             if(project.todoList[index].title == projects[i].todoList[j].title
             && project.todoList[index].dueDate == projects[i].todoList[j].dueDate){
                 projects[i].todoList.splice(j,1);
+                project.todoList.splice(index,1);
+                break outer;
             }
         }
     }
     save();
-    renderTodoList(todoList);
+    renderTodoList(project);
 }
 
 export function save(){
@@ -73,9 +74,8 @@ export function checkWeeklyTasks(){
     for (let i = 0 ; i < projects.length ; i++ ){
         for (let j = 0 ; j < projects[i].todoList.length ; j++){
             let taskdueDate = parse(projects[i].todoList[j].dueDate, 'dd-MM-yy', new Date());
-            if ( differenceInCalendarDays(new Date(),taskdueDate) <= 7 ){
-                console.log(weeklyProject.todoList);
-                console.log(weeklyProject);
+            if ( differenceInCalendarDays(new Date(),taskdueDate) <= 7 
+            && differenceInCalendarDays(new Date(),taskdueDate) >= 0 ){
                 weeklyProject.todoList.push(projects[i].todoList[j]);
             }
         }
@@ -95,4 +95,22 @@ export function checkDailyTasks(){
         }
     }
     renderTodoList(dailyProject);
+}
+
+export function markComplete(project,index){
+    outer: for (let i = 0 ; i < projects.length ; i++) {
+        for(let j = 0 ; j < projects[i].todoList.length ; j++){
+            if(project.todoList[index].title == projects[i].todoList[j].title
+            && project.todoList[index].dueDate == projects[i].todoList[j].dueDate){
+                if (projects[i].todoList[j].complete){
+                    projects[i].todoList[j].complete = false;
+                } else {
+                    projects[i].todoList[j].complete = true;
+                }
+                break outer;
+            }
+        }
+    }
+    save();
+    renderTodoList(project);
 }

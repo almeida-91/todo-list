@@ -8,24 +8,24 @@ import renderTodoList from "./renderTodoList.js";
 export default function addTask
 (project,task,description,dueDate,prio,notes) {
     let newTask = newTodoItem(task,description,dueDate,prio,notes);
+    let newtodoList;
     for (let i = 0 ; i < projects.length ; i++){
         if (projects[i].title == project){
             projects[i].todoList.push(newTask);
-            console.log(projects[i].todoList);
             renderSidebar();
             todoForm();
             renderTodoList(projects[i]);
-            todoList = projects[i];
+            newtodoList = projects[i].todoList;
+            save();
             return;
         }
     }
     let newproject = newProject(project,[]);
     newproject.todoList.push(newTask);
-    console.log(newproject.todoList);
     projects.push(newproject);
     save();
     renderSidebar();
     todoForm();    
     renderTodoList(newproject);
-    todoList = newproject;
+    newtodoList = newproject.todoList;
 }
