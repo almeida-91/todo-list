@@ -29,6 +29,8 @@ export default function todoForm() {
     projectInput.setAttribute('id','project');
     projectInput.required = true;
 
+
+    console.log(projects);
     for (let i = 0 ; i < projects.length ; i++){
         let project = document.createElement('option');
         project.value = projects[i].title;
@@ -42,7 +44,7 @@ export default function todoForm() {
     projectInput.appendChild(project);
 
     projectInput.onchange = () => {
-        if (projectInput.value == 'Other' || projects.length == 0){
+        if (projectInput.value == 'Other'){
             const newProjectLabel = document.createElement('label');
             newProjectLabel.setAttribute('for','newProjectInput');
             newProjectLabel.setAttribute('id','newProjectLabel');
@@ -143,6 +145,21 @@ export default function todoForm() {
 
     form.appendChild(notesLabel);
     form.appendChild(notesInput);
+
+    // Add new project input field if there are no projects
+    if (projects.length == 0){
+        const newProjectLabel = document.createElement('label');
+        newProjectLabel.setAttribute('for','newProjectInput');
+        newProjectLabel.setAttribute('id','newProjectLabel');
+        newProjectLabel.innerHTML = 'New project name : ';
+        
+        const newProjectInput = document.createElement('input');
+        newProjectInput.setAttribute('type','text');
+        newProjectInput.setAttribute('id','newProjectInput');
+
+        form.insertBefore(newProjectLabel,titleLabel);
+        form.insertBefore(newProjectInput,titleLabel);
+    }
 
     // Submit Button
     const submitButton = document.createElement('button');
