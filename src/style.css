@@ -67,6 +67,10 @@ body {
     border-radius: 10px 10px 0 0;
     padding-bottom: 30px;
     font-weight: 550;
+    display: grid;
+    grid-template-columns: 1fr 36px;
+    align-items: center;
+    gap: 5px;
 }
 
 #header {
@@ -128,7 +132,8 @@ button:hover {
 
 .sidebar button,
 .sidebar a,
-.sidebar p {
+.sidebar p,
+#footer a {
     width: 100%;
     font-size: large;
     background-color: none;
@@ -230,14 +235,16 @@ details button:hover {
     gap: 5px;
 }
 
-.sidebar a {
+.sidebar a,
+#footer a {
     text-decoration: none;
     color: white;
     margin: 5px;
     justify-self: start;
 }
 
-.sidebar a:hover {
+.sidebar a:hover,
+#footer a:hover {
     text-decoration: underline;
 }
 
@@ -253,4 +260,27 @@ details button:hover {
     margin-bottom: 0;
     padding-bottom: 0;
     border: none;
+}
+
+@media only screen and (max-width: 600px) {
+    #content {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-auto-rows: 1fr;
+    }
+
+    .sidebar {
+        border-radius: 10px;
+    }
+
+    tr {
+        margin: 5px;
+        width: 100%;
+        height: max-content;
+    }
+
+    .tablerow {
+        height: 30px;
+    }
 }

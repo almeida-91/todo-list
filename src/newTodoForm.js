@@ -151,8 +151,15 @@ export default function todoForm() {
 
     submitButton.addEventListener('click',() => {
         let date = format(new Date(`${dueInput.value}`), 'dd-MM-yy');
-        addTask(projectInput.value,titleInput.value,descInput.value,
-        date,prioInput.value,notesInput.value)});
+        if (projectInput.value != 'Other'){
+            addTask(projectInput.value,titleInput.value,descInput.value,
+            date,prioInput.value,notesInput.value);
+        } else {
+            const newProjectInput = document.getElementById('newProjectInput');
+            addTask(newProjectInput.value,titleInput.value,descInput.value,
+            date,prioInput.value,notesInput.value);
+        }
+    });
 
     formContainer.appendChild(form);
     formContainer.appendChild(submitButton);
