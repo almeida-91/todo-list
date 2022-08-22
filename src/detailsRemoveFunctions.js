@@ -74,12 +74,14 @@ export function checkWeeklyTasks(){
     for (let i = 0 ; i < projects.length ; i++ ){
         for (let j = 0 ; j < projects[i].todoList.length ; j++){
             let taskdueDate = parse(projects[i].todoList[j].dueDate, 'dd-MM-yy', new Date());
-            if ( differenceInCalendarDays(new Date(),taskdueDate) <= 7 
-            && differenceInCalendarDays(new Date(),taskdueDate) >= 0 ){
+            if ( differenceInCalendarDays(new Date(),taskdueDate) == 0
+            || (differenceInCalendarDays(taskdueDate,new Date()) <= 7  
+            && (new Date().getTime() <= taskdueDate.getTime()))){
                 weeklyProject.todoList.push(projects[i].todoList[j]);
             }
         }
     }
+    console.log(weeklyProject.todoList);
     renderTodoList(weeklyProject);
 }
 
